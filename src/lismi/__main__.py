@@ -19,7 +19,7 @@ EMULATE_LAYOUT = "qwerty"
 """Minimum: 2"""
 
 parser = argparse.ArgumentParser(
-    epilog="Lismi", description="A simple typing frontend for terminals."
+    description="Lismi - A simple typing frontend for terminals."
 )
 parser.add_argument(
     "-w", "--word-count", type=int, default=WORD_COUNT, help="Number of words per test."
