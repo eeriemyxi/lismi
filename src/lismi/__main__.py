@@ -105,11 +105,13 @@ def lrgst_k_sp_ss(k: int, arr: list[Char]) -> str:
     s = io.StringIO()
     cc = 0
     lrg = ""
+    sx = 0
 
     for c in arr:
         s.write(c.char)
         if c.char == " ":
             if cc == k:
+                sx += 1
                 cc = 0
                 if len(_s := s.getvalue()) > len(lrg):
                     lrg = _s
@@ -118,7 +120,7 @@ def lrgst_k_sp_ss(k: int, arr: list[Char]) -> str:
             else:
                 cc += 1
 
-    return lrg
+    return lrg, sx
 
 
 def get_char_arr() -> list[Char]:
@@ -139,13 +141,15 @@ def _cache(fun: typing.Callable) -> typing.Callable:  # type: ignore
 
 @_cache
 def _calc_ss(x: int, ss: int, chars: list[Char], max_w: int) -> tuple[int, int]:
+    sx = 0
     while (x - ((x // 2 - ss // 2) + ss)) < 10:
         max_w -= 1
         if max_w <= 2:
             max_w = 2
             break
-        ss = len(lrgst_k_sp_ss(max_w - 1, chars))
-    return max_w, ss
+        ss, sx = lrgst_k_sp_ss(max_w - 1, chars)
+        ss = len(ss)
+    return max_w, ss, sx
 
 
 def printer(chars: list[Char], stdscr: curses.window, max_w: int, ss: int) -> None:
@@ -153,11 +157,12 @@ def printer(chars: list[Char], stdscr: curses.window, max_w: int, ss: int) -> No
     stdscr.clear()
 
     y, x = stdscr.getmaxyx()
-    max_w, ss = _calc_ss(x, ss, chars, max_w)
+    max_w, ss, sx = _calc_ss(x, ss, chars, max_w)
 
     ax = x // 2 - ss // 2
     ax = ax if ax > 0 else 0
-    ay = y // 2
+    ay = y // 2 - sx // 2
+    ay = ay if ay > 0 else 0
 
     cx, cy = 0, 0
     cc = ccc = 0
@@ -220,7 +225,8 @@ def main() -> None:  # noqa: C901
     curses.init_pair(4, curses.COLOR_RED, curses.COLOR_RED)
 
     chars = get_char_arr()
-    ss = len(lrgst_k_sp_ss(MAX_SPACES, chars))
+    ss, sx = lrgst_k_sp_ss(MAX_SPACES, chars)
+    ss = len(ss)
     cur = 0
 
     p_args = (chars, stdscr, MAX_SPACES, ss)
