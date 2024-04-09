@@ -169,6 +169,13 @@ def next_space_index(chars: list[Char], cur: int) -> int:
     return -1
 
 
+def rem_char(chars: list[Char], cur: int) -> None:
+    chars[cur].state = CharState.DEFAULT
+    chars[cur].typed = chars[cur].char
+    cur -= 1
+
+
+def main() -> None:  # noqa: C901
     stdscr = curses.initscr()
 
     curses.noecho()
@@ -190,8 +197,18 @@ def next_space_index(chars: list[Char], cur: int) -> int:
     while True:
         key = stdscr.getkey()
 
-        # TODO: C-w | C-backspace removes one word
-        if key == "\x1b": # esc
+        if key == "\x17" or key == "\x08":  # c-w | c-backspace
+            if chars[cur - 1].char == " ":
+                rem_char(chars, cur - 1)
+                cur -= 1
+            while chars[cur - 1].char != " ":
+                if cur == 0:
+                    break
+                rem_char(chars, cur - 1)
+                cur -= 1
+            p_args = (chars, stdscr, MAX_SPACES, ss)
+            printer(*p_args)
+            continue
         if key == "\x1b":  # esc
             chars = get_char_arr()
             ss = len(lrgst_k_sp_ss(MAX_SPACES, chars))
@@ -199,16 +216,14 @@ def next_space_index(chars: list[Char], cur: int) -> int:
             p_args = (chars, stdscr, MAX_SPACES, ss)
             printer(*p_args)
             continue
-        if key == "\x7f": # backspace
+        if key == "\x7f":  # backspace
             if not cur > 0:
                 continue
+            rem_char(chars, cur - 1)
             cur -= 1
-            chars[cur].typed = chars[cur].char
-            chars[cur].state = CharState.DEFAULT
             printer(*p_args)
             continue
         if key == "KEY_RESIZE":
-            stdscr.clear()
             printer(*p_args)
             continue
         if cur == len(chars) or key == "\r":
