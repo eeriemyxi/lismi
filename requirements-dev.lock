@@ -8,12 +8,3 @@
 #   with-sources: false
 
 -e file:.
-evdev==1.7.0
-    # via pynput
-pynput==1.7.6
-    # via lismi
-python-xlib==0.33
-    # via pynput
-six==1.16.0
-    # via pynput
-    # via python-xlib
