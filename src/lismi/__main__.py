@@ -82,16 +82,16 @@ def get_char_arr() -> list[Char]:
 def _cache(fun: typing.Callable) -> typing.Callable:  # type: ignore
     _cache.cache_ = {}  # type: ignore
 
-    def inner(x: int, y: int, *args: list) -> int:  # type: ignore
-        if (x, y) not in _cache.cache_:  # type: ignore
-            _cache.cache_[(x, y)] = fun(x, y, *args)  # type: ignore
-        return _cache.cache_[(x, y)]  # type: ignore
+    def inner(x: int, *args: list) -> int:  # type: ignore
+        if x not in _cache.cache_:  # type: ignore
+            _cache.cache_[x] = fun(x, *args)  # type: ignore
+        return _cache.cache_[x]  # type: ignore
 
     return inner
 
 
 @_cache
-def _calc_ss(y: int, x: int, ss: int, chars: list[Char], max_w: int) -> tuple[int, int]:
+def _calc_ss(x: int, ss: int, chars: list[Char], max_w: int) -> tuple[int, int]:
     while (x - ((x // 2 - ss // 2) + ss)) < 10:
         max_w -= 1
         if max_w <= 2:
@@ -101,14 +101,12 @@ def _calc_ss(y: int, x: int, ss: int, chars: list[Char], max_w: int) -> tuple[in
     return max_w, ss
 
 
-def printer(_cur: int, chars: list[Char], stdscr: curses.window) -> None:
+def printer(chars: list[Char], stdscr: curses.window, max_w: int, ss: int) -> None:
     # FIXME: errors when text is out of bound
     stdscr.clear()
-    max_w = MAX_W
-    ss = len(lrgst_k_sp_ss(max_w, chars))
 
     y, x = stdscr.getmaxyx()
-    max_w, ss = _calc_ss(y, x, ss, chars, max_w)
+    max_w, ss = _calc_ss(x, ss, chars, max_w)
 
     ax = x // 2 - ss // 2
     ax = ax if ax > 0 else 0
@@ -161,45 +159,50 @@ def main() -> None:
     curses.init_pair(3, curses.COLOR_WHITE, curses.COLOR_BLACK)
     curses.init_pair(4, curses.COLOR_RED, curses.COLOR_RED)
 
-    words = get_char_arr()
+    chars = get_char_arr()
+    ss = len(lrgst_k_sp_ss(MAX_W, chars))
     cur = 0
 
-    printer(cur, words, stdscr)
+    p_args = (chars, stdscr, MAX_W, ss)
+    printer(*p_args)
 
     while True:
         key = stdscr.getkey()
 
         # TODO: C-w | C-backspace removes one word
-        if key == "\x1b":
+        if key == "\x1b": # esc
+            chars = get_char_arr()
+            ss = len(lrgst_k_sp_ss(MAX_W, chars))
             cur = 0
-            words = get_char_arr()
-            printer(cur, words, stdscr)
+            p_args = (chars, stdscr, MAX_W, ss)
+            printer(*p_args)
             continue
-        if key == "\x7f":
+        if key == "\x7f": # backspace
             if not cur > 0:
                 continue
             cur -= 1
-            words[cur].typed = words[cur].char
-            words[cur].state = CharState.DEFAULT
-            printer(cur, words, stdscr)
+            chars[cur].typed = chars[cur].char
+            chars[cur].state = CharState.DEFAULT
+            printer(*p_args)
             continue
         if key == "KEY_RESIZE":
             stdscr.clear()
-            printer(cur, words, stdscr)
+            printer(*p_args)
             continue
-        if cur == len(words) or key == "\r":
+        if cur == len(chars) or key == "\r":
             continue
 
         # key = convert_char(key, COLEMAK, QWERTY)
-        if key == words[cur].char:
-            words[cur].state = CharState.CORRECT
+
+        if key == chars[cur].char:
+            chars[cur].state = CharState.CORRECT
         else:
-            words[cur].typed = key
-            words[cur].state = CharState.INCORRECT
+            chars[cur].typed = key
+            chars[cur].state = CharState.INCORRECT
 
         cur += 1
 
-        printer(cur, words, stdscr)
+        printer(*p_args)
 
 
 if __name__ == "__main__":
