@@ -12,11 +12,11 @@ COLEMAK = list("qqwwffppggjjlluuyy;:[{]}aarrssttddhhnneeiioo'\"zzxxccvvbbkkmm,<.
 QWERTY = list("qqwweerrttyyuuiioopp[{]}aassddffgghhjjkkll;:'\"zzxxccvvbbnnmm,<.>/?")
 SCRIPT_DIR = pathlib.Path(__file__).parent
 MAX_SPACES = 10
+"""Minimum: 2"""
 WORD_COUNT = 20
 SKIP_WORDS = False
 TARGET_LAYOUT = "qwerty"
 EMULATE_LAYOUT = "qwerty"
-"""Minimum: 2"""
 
 parser = argparse.ArgumentParser(
     description="Lismi - A simple typing frontend for terminals."
