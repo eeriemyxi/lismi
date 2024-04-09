@@ -282,9 +282,12 @@ def main() -> None:  # noqa: C901
         printer(*p_args)
 
 
-if __name__ == "__main__":
+def _main():
     try:
         main()
     except KeyboardInterrupt:
         curses.endwin()
         exit(0)
+
+if __name__ == "__main__":
+    _main()
