@@ -22,7 +22,11 @@ parser = argparse.ArgumentParser(
     description="Lismi - A simple typing frontend for terminals."
 )
 parser.add_argument(
-    "-w", "--word-count", type=int, default=WORD_COUNT, help="Number of words per test."
+    "-w",
+    "--word-count",
+    type=int,
+    default=WORD_COUNT,
+    help=f"Number of words per test. Default: {WORD_COUNT!r}.",
 )
 parser.add_argument(
     "-s",
@@ -35,13 +39,14 @@ parser.add_argument(
     "-t",
     "--target-layout",
     default=TARGET_LAYOUT,
-    help="Target layout. Available: qwerty, colemak",
+    help=f"Target layout. Default: {TARGET_LAYOUT!r}. Available: qwerty, colemak.",
 )
 parser.add_argument(
     "-e",
     "--emulate-layout",
     default=EMULATE_LAYOUT,
-    help="Emulate layout. Available: qwerty, colemak",
+    help=f"Emulate layout. Default: {EMULATE_LAYOUT!r}. Available: qwerty, colemak.",
+)
 parser.add_argument(
     "-V",
     "--version",
