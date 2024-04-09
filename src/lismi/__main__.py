@@ -2,6 +2,7 @@ import argparse
 import curses
 import dataclasses
 import enum
+import importlib.metadata
 import io
 import pathlib
 import random
@@ -41,6 +42,12 @@ parser.add_argument(
     "--emulate-layout",
     default=EMULATE_LAYOUT,
     help="Emulate layout. Available: qwerty, colemak",
+parser.add_argument(
+    "-V",
+    "--version",
+    action="version",
+    version=importlib.metadata.version("lismi"),
+    help="Show program version.",
 )
 cli_args = parser.parse_args()
 
