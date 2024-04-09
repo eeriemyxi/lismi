@@ -1,3 +1,4 @@
+import argparse
 import curses
 import dataclasses
 import enum
@@ -10,7 +11,16 @@ COLEMAK = list("qqwwffppggjjlluuyy;:[{]}aarrssttddhhnneeiioo'\"zzxxccvvbbkkmm,<.
 QWERTY = list("qqwweerrttyyuuiioopp[{]}aassddffgghhjjkkll;:'\"zzxxccvvbbnnmm,<.>/?")
 SCRIPT_DIR = pathlib.Path(__file__).parent
 MAX_W = 10
+WORD_COUNT = 20
 """Minimum: 2"""
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "-w", "--word-count", type=int, default=WORD_COUNT, help="Number of words per test."
+)
+cli_args = parser.parse_args()
+
+WORD_COUNT = cli_args.word_count
 
 
 class CharState(enum.Enum):
@@ -47,9 +57,9 @@ def convert_char(char: str, target_layout: list[str], emulate_layout: list[str])
     return char
 
 
-def get_words() -> str:
-    with open(SCRIPT_DIR / "words/two-hundred.txt") as file:
-        return " ".join(random.choices(file.read().split(), k=20))  # noqa:S311
+def get_words(count: int) -> str:
+    with open(SCRIPT_DIR / "words" / "two-hundred.txt") as file:
+        return " ".join(random.choices(file.read().split(), k=count))  # noqa:S311
 
 
 def lrgst_k_sp_ss(k: int, arr: list[Char]) -> str:
@@ -75,7 +85,7 @@ def lrgst_k_sp_ss(k: int, arr: list[Char]) -> str:
 
 
 def get_char_arr() -> list[Char]:
-    return [Char(c, typed=c, state=CharState.DEFAULT) for c in get_words()]
+    return [Char(c, typed=c, state=CharState.DEFAULT) for c in get_words(WORD_COUNT)]
 
 
 # https://stackoverflow.com/a/66002772/22818367
