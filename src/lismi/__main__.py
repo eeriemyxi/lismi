@@ -111,8 +111,7 @@ def lrgst_k_sp_ss(k: int, arr: list[Char]) -> str:
         if c.char == " ":
             if cc == k:
                 cc = 0
-                _s = s.getvalue()
-                if len(_s) > len(lrg):
+                if len(_s := s.getvalue()) > len(lrg):
                     lrg = _s
                 s.seek(0)
                 s.truncate(0)
@@ -256,10 +255,8 @@ def main() -> None:  # noqa: C901
             cur -= 1
             printer(*p_args)
             continue
-        if key == "KEY_RESIZE":
+        if cur == len(chars) or key == "\r" or key == "KEY_RESIZE":
             printer(*p_args)
-            continue
-        if cur == len(chars) or key == "\r":
             continue
         if SKIP_WORDS and key == " " and chars[cur].char != " ":
             np = next_space_index(chars, cur)
