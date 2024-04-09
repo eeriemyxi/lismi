@@ -100,7 +100,7 @@ def get_words(count: int) -> str:
         return " ".join(random.choices(file.read().split(), k=count))  # noqa:S311
 
 
-def lrgst_k_sp_ss(k: int, arr: list[Char]) -> str:
+def lrgst_k_sp_ss(k: int, arr: list[Char]) -> tuple[str, int]:
     """Find largest space-separated substring."""
     s = io.StringIO()
     cc = 0
@@ -140,15 +140,15 @@ def _cache(fun: typing.Callable) -> typing.Callable:  # type: ignore
 
 
 @_cache
-def _calc_ss(x: int, ss: int, chars: list[Char], max_w: int) -> tuple[int, int]:
+def _calc_ss(x: int, ss: int, chars: list[Char], max_w: int) -> tuple[int, int, int]:
     sx = 0
     while (x - ((x // 2 - ss // 2) + ss)) < 10:
         max_w -= 1
         if max_w <= 2:
             max_w = 2
             break
-        ss, sx = lrgst_k_sp_ss(max_w - 1, chars)
-        ss = len(ss)
+        _ss, sx = lrgst_k_sp_ss(max_w - 1, chars)
+        ss = len(_ss)
     return max_w, ss, sx
 
 
@@ -285,12 +285,13 @@ def main() -> None:  # noqa: C901
         printer(*p_args)
 
 
-def _main():
+def _main() -> None:
     try:
         main()
     except KeyboardInterrupt:
         curses.endwin()
         exit(0)
+
 
 if __name__ == "__main__":
     _main()
