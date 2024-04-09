@@ -60,7 +60,6 @@ def lrgst_k_sp_ss(k: int, arr: list[Char]) -> str:
 
     for c in arr:
         s.write(c.char)
-        # print(c.char)
         if c.char == " ":
             if cc == k:
                 cc = 0
