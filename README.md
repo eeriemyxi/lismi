@@ -9,6 +9,17 @@ This is in alpha stage. Do not use it.
 - color highlighting
 - text alignment and text wrapping
 
+# Installation
+### First Method
+```bash
+git clone --depth 1 --branch main <REPO URL> lismi
+pip install ./lismi
+```
+### Second Method
+```bash
+pip install git+<REPO URL>@main
+```
+
 # Command-Line Arguments
 ```
 usage: lismi [-h] [-w WORD_COUNT] [-s] [-t TARGET_LAYOUT] [-e EMULATE_LAYOUT]
