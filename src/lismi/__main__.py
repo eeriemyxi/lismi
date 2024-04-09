@@ -10,17 +10,22 @@ import typing
 COLEMAK = list("qqwwffppggjjlluuyy;:[{]}aarrssttddhhnneeiioo'\"zzxxccvvbbkkmm,<.>/?")
 QWERTY = list("qqwweerrttyyuuiioopp[{]}aassddffgghhjjkkll;:'\"zzxxccvvbbnnmm,<.>/?")
 SCRIPT_DIR = pathlib.Path(__file__).parent
-MAX_W = 10
+MAX_SPACES = 10
 WORD_COUNT = 20
+SKIP_WORDS = False
 """Minimum: 2"""
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
     "-w", "--word-count", type=int, default=WORD_COUNT, help="Number of words per test."
 )
+parser.add_argument(
+    "-s", "--skip-words", type=bool, default=SKIP_WORDS, help="Space skips words."
+)
 cli_args = parser.parse_args()
 
 WORD_COUNT = cli_args.word_count
+SKIP_WORDS = cli_args.skip_words
 
 
 class CharState(enum.Enum):
@@ -157,7 +162,13 @@ def printer(chars: list[Char], stdscr: curses.window, max_w: int, ss: int) -> No
     stdscr.move(ay + cy, ax + cx)
 
 
-def main() -> None:
+def next_space_index(chars: list[Char], cur: int) -> int:
+    for i, c in enumerate(chars[cur:]):
+        if c.char == " ":
+            return cur + i
+    return -1
+
+
     stdscr = curses.initscr()
 
     curses.noecho()
@@ -170,10 +181,10 @@ def main() -> None:
     curses.init_pair(4, curses.COLOR_RED, curses.COLOR_RED)
 
     chars = get_char_arr()
-    ss = len(lrgst_k_sp_ss(MAX_W, chars))
+    ss = len(lrgst_k_sp_ss(MAX_SPACES, chars))
     cur = 0
 
-    p_args = (chars, stdscr, MAX_W, ss)
+    p_args = (chars, stdscr, MAX_SPACES, ss)
     printer(*p_args)
 
     while True:
@@ -181,10 +192,11 @@ def main() -> None:
 
         # TODO: C-w | C-backspace removes one word
         if key == "\x1b": # esc
+        if key == "\x1b":  # esc
             chars = get_char_arr()
-            ss = len(lrgst_k_sp_ss(MAX_W, chars))
+            ss = len(lrgst_k_sp_ss(MAX_SPACES, chars))
             cur = 0
-            p_args = (chars, stdscr, MAX_W, ss)
+            p_args = (chars, stdscr, MAX_SPACES, ss)
             printer(*p_args)
             continue
         if key == "\x7f": # backspace
@@ -200,6 +212,13 @@ def main() -> None:
             printer(*p_args)
             continue
         if cur == len(chars) or key == "\r":
+            continue
+        if SKIP_WORDS and key == " " and chars[cur].char != " ":
+            np = next_space_index(chars, cur)
+            for c in chars[cur : np + 1]:
+                c.state = CharState.INCORRECT
+            cur = np + 1
+            printer(*p_args)
             continue
 
         # key = convert_char(key, COLEMAK, QWERTY)
