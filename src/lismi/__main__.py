@@ -13,19 +13,41 @@ SCRIPT_DIR = pathlib.Path(__file__).parent
 MAX_SPACES = 10
 WORD_COUNT = 20
 SKIP_WORDS = False
+TARGET_LAYOUT = "qwerty"
+EMULATE_LAYOUT = "qwerty"
 """Minimum: 2"""
 
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser(
+    epilog="Lismi", description="A simple typing frontend for terminals."
+)
 parser.add_argument(
     "-w", "--word-count", type=int, default=WORD_COUNT, help="Number of words per test."
 )
 parser.add_argument(
-    "-s", "--skip-words", type=bool, default=SKIP_WORDS, help="Space skips words."
+    "-s",
+    "--skip-words",
+    action="store_true",
+    default=SKIP_WORDS,
+    help="Space skips words.",
+)
+parser.add_argument(
+    "-t",
+    "--target-layout",
+    default=TARGET_LAYOUT,
+    help="Target layout. Available: qwerty, colemak",
+)
+parser.add_argument(
+    "-e",
+    "--emulate-layout",
+    default=EMULATE_LAYOUT,
+    help="Emulate layout. Available: qwerty, colemak",
 )
 cli_args = parser.parse_args()
 
 WORD_COUNT = cli_args.word_count
 SKIP_WORDS = cli_args.skip_words
+TARGET_LAYOUT = globals()[cli_args.target_layout.upper()]
+EMULATE_LAYOUT = globals()[cli_args.emulate_layout.upper()]
 
 
 class CharState(enum.Enum):
@@ -56,8 +78,7 @@ def get_index(arr: list, item: object) -> int | None:
 
 
 def convert_char(char: str, target_layout: list[str], emulate_layout: list[str]) -> str:
-    ei = get_index(target_layout, char)
-    if ei:
+    if ei := get_index(target_layout, char):
         return emulate_layout[ei]
     return char
 
@@ -236,7 +257,7 @@ def main() -> None:  # noqa: C901
             printer(*p_args)
             continue
 
-        # key = convert_char(key, COLEMAK, QWERTY)
+        key = convert_char(key, TARGET_LAYOUT, EMULATE_LAYOUT)
 
         if key == chars[cur].char:
             chars[cur].state = CharState.CORRECT
