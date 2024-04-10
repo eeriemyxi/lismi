@@ -102,7 +102,7 @@ def get_words(count: int) -> str:
 
 
 def lrgst_k_sp_ss(k: int, arr: list[Char]) -> tuple[str, int]:
-    """Find largest space-separated substring."""
+    """Find largest k-space-separated substring."""
     s = io.StringIO()
     cc = 0
     lrg = ""
