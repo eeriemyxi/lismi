@@ -291,6 +291,9 @@ def _main() -> None:
     except KeyboardInterrupt:
         curses.endwin()
         exit(0)
+    except Exception as err:
+        curses.endwin()
+        raise err
 
 
 if __name__ == "__main__":
