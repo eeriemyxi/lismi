@@ -49,6 +49,13 @@ parser.add_argument(
     help=f"Emulate layout. Default: {EMULATE_LAYOUT!r}. Available: qwerty, colemak.",
 )
 parser.add_argument(
+    "-m",
+    "--max-spaces",
+    default=MAX_SPACES,
+    type=int,
+    help=f"Max spaces per line. Default: {MAX_SPACES!r}. Minimum: 2.",
+)
+parser.add_argument(
     "-V",
     "--version",
     action="version",
@@ -57,6 +64,7 @@ parser.add_argument(
 )
 cli_args = parser.parse_args()
 
+MAX_SPACES = cli_args.max_spaces if cli_args.max_spaces > 2 else 2
 WORD_COUNT = cli_args.word_count
 SKIP_WORDS = cli_args.skip_words
 TARGET_LAYOUT = globals()[cli_args.target_layout.upper()]
@@ -251,8 +259,10 @@ def main() -> None:  # noqa: C901
             printer(*p_args)
             continue
         if key == "\x1b":  # esc
+            _cache.cache_ = {} # type: ignore
             chars = get_char_arr()
-            ss = len(lrgst_k_sp_ss(MAX_SPACES, chars))
+            ss, _ = lrgst_k_sp_ss(MAX_SPACES, chars)
+            ss = len(ss)
             cur = 0
             p_args = (chars, stdscr, MAX_SPACES, ss)
             printer(*p_args)
