@@ -4,10 +4,10 @@ import dataclasses
 import enum
 import importlib.metadata
 import io
+import math
 import pathlib
 import random
 import typing
-import math
 
 COLEMAK = list("qqwwffppggjjlluuyy;:[{]}aarrssttddhhnneeiioo'\"zzxxccvvbbkkmm,<.>/?")
 QWERTY = list("qqwweerrttyyuuiioopp[{]}aassddffgghhjjkkll;:'\"zzxxccvvbbnnmm,<.>/?")
