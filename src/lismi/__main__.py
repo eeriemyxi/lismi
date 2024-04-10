@@ -120,6 +120,8 @@ def lrgst_k_sp_ss(k: int, arr: list[Char]) -> tuple[str, int]:
                 s.truncate(0)
             else:
                 cc += 1
+    if not lrg:
+        lrg = s.getvalue()
 
     return lrg, sx
 
