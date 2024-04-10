@@ -226,7 +226,7 @@ def main() -> None:  # noqa: C901
     curses.init_pair(4, curses.COLOR_RED, curses.COLOR_RED)
 
     chars = get_char_arr()
-    ss, sx = lrgst_k_sp_ss(MAX_SPACES, chars)
+    ss, _ = lrgst_k_sp_ss(MAX_SPACES, chars)
     ss = len(ss)
     cur = 0
 
