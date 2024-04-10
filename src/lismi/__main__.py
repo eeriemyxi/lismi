@@ -7,6 +7,7 @@ import io
 import math
 import pathlib
 import random
+import time
 import typing
 
 COLEMAK = list("qqwwffppggjjlluuyy;:[{]}aarrssttddhhnneeiioo'\"zzxxccvvbbkkmm,<.>/?")
@@ -16,6 +17,7 @@ MAX_SPACES = 10
 """Minimum: 2"""
 WORD_COUNT = 20
 SKIP_WORDS = False
+QUICK_END = False
 TARGET_LAYOUT = "qwerty"
 EMULATE_LAYOUT = "qwerty"
 
@@ -56,6 +58,13 @@ parser.add_argument(
     help=f"Max spaces per line. Default: {MAX_SPACES!r}. Minimum: 2.",
 )
 parser.add_argument(
+    "-q",
+    "--quick-end",
+    default=QUICK_END,
+    action="store_true",
+    help=f"Quickly end test by ignoring last space. Default: {QUICK_END!r}.",
+)
+parser.add_argument(
     "-V",
     "--version",
     action="version",
@@ -67,6 +76,7 @@ cli_args = parser.parse_args()
 MAX_SPACES = cli_args.max_spaces if cli_args.max_spaces > 2 else 2
 WORD_COUNT = cli_args.word_count
 SKIP_WORDS = cli_args.skip_words
+QUICK_END = cli_args.quick_end
 TARGET_LAYOUT = globals()[cli_args.target_layout.upper()]
 EMULATE_LAYOUT = globals()[cli_args.emulate_layout.upper()]
 
@@ -163,6 +173,22 @@ def _calc_ss(x: int, ss: int, chars: list[Char], max_w: int) -> tuple[int, int, 
     return max_w, ss, sx
 
 
+def report_printer(stdscr: curses.window, cc: int, ic: int, minutes: float) -> None:
+    stdscr.clear()
+    curses.curs_set(0)
+    y, x = stdscr.getmaxyx()
+    outp = []
+    gwpm = math.ceil((cc / 5) / minutes)
+    nwpm = math.ceil(((cc - ic) / 5) / minutes)
+    accuracy = math.ceil(nwpm / gwpm * 100)
+    outp.append(f"Gross WPM: {gwpm if gwpm > 0 else 0}")
+    outp.append(f"Net WPM: {nwpm if nwpm > 0 else 0}")
+    outp.append(f"Accuracy: {accuracy if accuracy > 0 else 0}%")
+    lrg = max(map(len, outp))
+    for i in range(len(outp)):
+        stdscr.addstr((y // 2 - 3 // 2) + i, x // 2 - lrg // 2, outp[i] + "\n")
+
+
 def printer(chars: list[Char], stdscr: curses.window, max_w: int, ss: int) -> None:
     # FIXME: errors when text is out of bound
     stdscr.clear()
@@ -239,6 +265,8 @@ def main() -> None:  # noqa: C901
     ss, _ = lrgst_k_sp_ss(MAX_SPACES, chars)
     ss = len(ss)
     cur = 0
+    start_time = time.time()
+    _report_printed = False
 
     p_args = (chars, stdscr, MAX_SPACES, ss)
     printer(*p_args)
@@ -259,11 +287,14 @@ def main() -> None:  # noqa: C901
             printer(*p_args)
             continue
         if key == "\x1b":  # esc
-            _cache.cache_ = {} # type: ignore
+            _cache.cache_ = {}  # type: ignore
             chars = get_char_arr()
             ss, _ = lrgst_k_sp_ss(MAX_SPACES, chars)
             ss = len(ss)
             cur = 0
+            start_time = time.time()
+            _report_printed = False
+            curses.curs_set(1)
             p_args = (chars, stdscr, MAX_SPACES, ss)
             printer(*p_args)
             continue
@@ -274,7 +305,22 @@ def main() -> None:  # noqa: C901
             cur -= 1
             printer(*p_args)
             continue
-        if cur == len(chars) or key == "\r" or key == "KEY_RESIZE":
+        if cur == len(chars) - QUICK_END and not _report_printed:
+            cc = 0
+            ic = 0
+            end_time = time.time()
+            minutes = (end_time - start_time) / 60
+            for c in chars:
+                if c.state == CharState.CORRECT:
+                    cc += 1
+                if c.state == CharState.INCORRECT:
+                    ic += 1
+            report_printer(stdscr, cc, ic, minutes)
+            _report_printed = True
+            continue
+        if cur == len(chars) - QUICK_END:
+            continue
+        if key == "\r" or key == "KEY_RESIZE":
             printer(*p_args)
             continue
         if SKIP_WORDS and key == " " and chars[cur].char != " ":
