@@ -23,7 +23,7 @@ pip install git+<REPO URL>@main
 # Command-Line Arguments
 ```
 usage: lismi [-h] [-w WORD_COUNT] [-s] [-t TARGET_LAYOUT] [-e EMULATE_LAYOUT]
-             [-V]
+             [-m MAX_SPACES] [-V]
 
 Lismi - A simple typing frontend for terminals.
 
@@ -38,5 +38,7 @@ options:
   -e EMULATE_LAYOUT, --emulate-layout EMULATE_LAYOUT
                         Emulate layout. Default: 'qwerty'. Available: qwerty,
                         colemak.
+  -m MAX_SPACES, --max-spaces MAX_SPACES
+                        Max spaces per line. Default: 10. Minimum: 2.
   -V, --version         Show program version.
 ```
