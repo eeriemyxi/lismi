@@ -186,7 +186,7 @@ def report_printer(stdscr: curses.window, cc: int, ic: int, minutes: float) -> N
     outp.append(f"Accuracy: {accuracy if accuracy > 0 else 0}%")
     lrg = max(map(len, outp))
     for i in range(len(outp)):
-        stdscr.addstr((y // 2 - 3 // 2) + i, x // 2 - lrg // 2, outp[i] + "\n")
+        stdscr.addstr((y // 2 - len(outp) // 2) + i, x // 2 - lrg // 2, outp[i] + "\n")
 
 
 def printer(chars: list[Char], stdscr: curses.window, max_w: int, ss: int) -> None:
