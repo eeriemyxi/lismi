@@ -23,7 +23,7 @@ pip install git+<REPO URL>@main
 # Command-Line Arguments
 ```
 usage: lismi [-h] [-w WORD_COUNT] [-s] [-t TARGET_LAYOUT] [-e EMULATE_LAYOUT]
-             [-m MAX_SPACES] [-V]
+             [-m MAX_SPACES] [-q] [-V]
 
 Lismi - A simple typing frontend for terminals.
 
@@ -40,5 +40,6 @@ options:
                         colemak.
   -m MAX_SPACES, --max-spaces MAX_SPACES
                         Max spaces per line. Default: 10. Minimum: 2.
+  -q, --quick-end       Quickly end test by ignoring last space. Default: False.
   -V, --version         Show program version.
 ```
