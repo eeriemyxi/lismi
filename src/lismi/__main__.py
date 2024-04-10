@@ -7,6 +7,7 @@ import io
 import pathlib
 import random
 import typing
+import math
 
 COLEMAK = list("qqwwffppggjjlluuyy;:[{]}aarrssttddhhnneeiioo'\"zzxxccvvbbkkmm,<.>/?")
 QWERTY = list("qqwweerrttyyuuiioopp[{]}aassddffgghhjjkkll;:'\"zzxxccvvbbnnmm,<.>/?")
@@ -142,7 +143,7 @@ def _cache(fun: typing.Callable) -> typing.Callable:  # type: ignore
 @_cache
 def _calc_ss(x: int, ss: int, chars: list[Char], max_w: int) -> tuple[int, int, int]:
     sx = 0
-    while (x - ((x // 2 - ss // 2) + ss)) < 10:
+    while (x - ((math.floor(x / 2) - math.floor(ss / 2)) + ss)) < 3:
         max_w -= 1
         if max_w <= 2:
             max_w = 2
@@ -159,9 +160,9 @@ def printer(chars: list[Char], stdscr: curses.window, max_w: int, ss: int) -> No
     y, x = stdscr.getmaxyx()
     max_w, ss, sx = _calc_ss(x, ss, chars, max_w)
 
-    ax = x // 2 - ss // 2
+    ax = math.floor(x / 2) - math.floor(ss / 2)
     ax = ax if ax > 0 else 0
-    ay = y // 2 - sx // 2
+    ay = math.floor(y / 2) - math.floor(sx / 2)
     ay = ay if ay > 0 else 0
 
     cx, cy = 0, 0
