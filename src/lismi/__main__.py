@@ -369,6 +369,4 @@ def _main() -> None:
 if __name__ == "__main__":
     _main()
 
-# TODO: make a video and add it to readme
-# TODO: remove alpha state (to beta)
 # TODO: add live wpm counter
