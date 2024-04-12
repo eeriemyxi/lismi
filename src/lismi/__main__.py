@@ -332,7 +332,7 @@ def main() -> None:  # noqa: C901
         if SKIP_WORDS and key == " " and cur < len(chars) and chars[cur].char != " ":
             np = next_space_index(chars, cur)
             if not np:
-                np = len(chars)-1
+                np = len(chars) - 1
             for c in chars[cur : np + 1]:
                 c.state = CharState.INCORRECT
             cur = np + 1
