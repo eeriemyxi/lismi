@@ -7,7 +7,7 @@
 A simple typing frontend for your terminal.
 
 # State of the Project
-This is in alpha stage. Do not use it.
+This is in beta stage. The experience is not guaranteed to be stable.
 
 # Features
 - layout emulation
