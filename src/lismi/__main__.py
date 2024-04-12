@@ -320,6 +320,8 @@ def main() -> None:  # noqa: C901
                 continue
             rem_char(chars, cur - 1)
             cur -= 1
+            _report_printed = False
+            curses.curs_set(1)
             printer(*p_args)
             continue
         if cur == len(chars) - QUICK_END:
