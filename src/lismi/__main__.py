@@ -329,7 +329,7 @@ def main() -> None:  # noqa: C901
         if key == "\r" or key == "KEY_RESIZE":
             printer(*p_args)
             continue
-        if SKIP_WORDS and key == " " and chars[cur].char != " ":
+        if SKIP_WORDS and key == " " and cur < len(chars) and chars[cur].char != " ":
             np = next_space_index(chars, cur)
             for c in chars[cur : np + 1]:
                 c.state = CharState.INCORRECT
@@ -338,6 +338,9 @@ def main() -> None:  # noqa: C901
             continue
 
         key = convert_char(key, TARGET_LAYOUT, EMULATE_LAYOUT)
+
+        if len(chars) <= cur:
+            continue
 
         if key == chars[cur].char:
             chars[cur].state = CharState.CORRECT
