@@ -1,4 +1,9 @@
 # Lismi
+
+<p align="center">
+    <img src="assets/demo.gif"
+</p>
+
 A simple typing frontend for your terminal.
 
 # State of the Project
