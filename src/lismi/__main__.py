@@ -275,6 +275,20 @@ def main() -> None:  # noqa: C901
     printer(*p_args)
 
     while True:
+        if cur >= len(chars) - QUICK_END and not _report_printed:
+            cc = 0
+            ic = 0
+            end_time = time.time()
+            minutes = (end_time - start_time) / 60
+            for c in chars:
+                if c.state == CharState.CORRECT:
+                    cc += 1
+                if c.state == CharState.INCORRECT:
+                    ic += 1
+            report_printer(stdscr, cc, ic, minutes)
+            _report_printed = True
+            continue
+
         key = stdscr.getkey()
 
         if key == "\x17" or key == "\x08":  # c-w | c-backspace
@@ -307,19 +321,6 @@ def main() -> None:  # noqa: C901
             rem_char(chars, cur - 1)
             cur -= 1
             printer(*p_args)
-            continue
-        if cur == len(chars) - QUICK_END and not _report_printed:
-            cc = 0
-            ic = 0
-            end_time = time.time()
-            minutes = (end_time - start_time) / 60
-            for c in chars:
-                if c.state == CharState.CORRECT:
-                    cc += 1
-                if c.state == CharState.INCORRECT:
-                    ic += 1
-            report_printer(stdscr, cc, ic, minutes)
-            _report_printed = True
             continue
         if cur == len(chars) - QUICK_END:
             continue
