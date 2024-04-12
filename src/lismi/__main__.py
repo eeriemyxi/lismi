@@ -145,7 +145,9 @@ def lrgst_k_sp_ss(k: int, arr: list[Char]) -> tuple[str, int]:
 
 
 def get_char_arr() -> list[Char]:
-    return [Char(c, typed=c, state=CharState.DEFAULT) for c in get_words(WORD_COUNT)]
+    return [
+        Char(c, typed=c, state=CharState.DEFAULT) for c in get_words(WORD_COUNT)
+    ] + [Char(" ", " ", CharState.DEFAULT)]
 
 
 # https://stackoverflow.com/a/66002772/22818367
