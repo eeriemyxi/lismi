@@ -180,7 +180,10 @@ def report_printer(stdscr: curses.window, cc: int, ic: int, minutes: float) -> N
     outp = []
     gwpm = math.ceil((cc / 5) / minutes)
     nwpm = math.ceil(((cc - ic) / 5) / minutes)
-    accuracy = math.ceil(nwpm / gwpm * 100)
+    try:
+        accuracy = math.ceil(nwpm / gwpm * 100)
+    except ZeroDivisionError:
+        accuracy = 0
     outp.append(f"Gross WPM: {gwpm if gwpm > 0 else 0}")
     outp.append(f"Net WPM: {nwpm if nwpm > 0 else 0}")
     outp.append(f"Accuracy: {accuracy if accuracy > 0 else 0}%")
