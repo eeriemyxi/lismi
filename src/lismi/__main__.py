@@ -269,6 +269,7 @@ def main() -> None:  # noqa: C901
     ss = len(ss)
     cur = 0
     start_time = time.time()
+    _st_reset = False
     _report_printed = False
 
     p_args = (chars, stdscr, MAX_SPACES, ss)
@@ -291,6 +292,10 @@ def main() -> None:  # noqa: C901
 
         key = stdscr.getkey()
 
+        if cur == 0 and not _st_reset:
+            _st_reset = True
+            start_time = time.time()
+
         if key == "\x17" or key == "\x08":  # c-w | c-backspace
             if chars[cur - 1].char == " ":
                 rem_char(chars, cur - 1)
@@ -310,6 +315,7 @@ def main() -> None:  # noqa: C901
             ss = len(ss)
             cur = 0
             start_time = time.time()
+            _st_reset = False
             _report_printed = False
             curses.curs_set(1)
             p_args = (chars, stdscr, MAX_SPACES, ss)
