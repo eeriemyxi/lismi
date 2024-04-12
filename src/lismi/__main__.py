@@ -254,19 +254,7 @@ def rem_char(chars: list[Char], cur: int) -> None:
     cur -= 1
 
 
-def main() -> None:  # noqa: C901
-    stdscr = curses.initscr()
-
-    curses.noecho()
-    curses.nonl()
-    curses.start_color()
-
-    curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
-    curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)
-    curses.init_pair(3, curses.COLOR_WHITE, curses.COLOR_BLACK)
-    curses.init_pair(4, curses.COLOR_RED, curses.COLOR_RED)
-
-    chars = get_char_arr()
+def typer(stdscr: curses.window, chars: list[Char]) -> bool:  # noqa: C901
     ss, _ = lrgst_k_sp_ss(MAX_SPACES, chars)
     ss = len(ss)
     cur = 0
@@ -278,7 +266,7 @@ def main() -> None:  # noqa: C901
     printer(*p_args)
 
     while True:
-        if cur >= len(chars) - QUICK_END and not _report_printed:
+        if cur >= (len(chars) - QUICK_END) and not _report_printed:
             cc = 0
             ic = 0
             end_time = time.time()
@@ -311,18 +299,7 @@ def main() -> None:  # noqa: C901
             printer(*p_args)
             continue
         if key == "\x1b":  # esc
-            _cache.cache_ = {}  # type: ignore
-            chars = get_char_arr()
-            ss, _ = lrgst_k_sp_ss(MAX_SPACES, chars)
-            ss = len(ss)
-            cur = 0
-            start_time = time.time()
-            _st_reset = False
-            _report_printed = False
-            curses.curs_set(1)
-            p_args = (chars, stdscr, MAX_SPACES, ss)
-            printer(*p_args)
-            continue
+            return True
         if key == "\x7f":  # backspace
             if not cur > 0:
                 continue
@@ -361,6 +338,24 @@ def main() -> None:  # noqa: C901
         cur += 1
 
         printer(*p_args)
+
+
+def main() -> None:
+    stdscr = curses.initscr()
+
+    curses.noecho()
+    curses.nonl()
+    curses.start_color()
+
+    curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
+    curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)
+    curses.init_pair(3, curses.COLOR_WHITE, curses.COLOR_BLACK)
+    curses.init_pair(4, curses.COLOR_RED, curses.COLOR_RED)
+
+    start_again = True
+    while start_again:
+        chars = get_char_arr()
+        start_again = typer(stdscr, chars)
 
 
 def _main() -> None:
