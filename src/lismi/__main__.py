@@ -355,6 +355,7 @@ def main() -> None:
     start_again = True
     while start_again:
         chars = get_char_arr()
+        curses.curs_set(1)
         start_again = typer(stdscr, chars)
 
 
