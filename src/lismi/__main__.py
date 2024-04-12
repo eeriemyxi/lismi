@@ -239,11 +239,11 @@ def printer(chars: list[Char], stdscr: curses.window, max_w: int, ss: int) -> No
     stdscr.move(ay + cy, ax + cx)
 
 
-def next_space_index(chars: list[Char], cur: int) -> int:
+def next_space_index(chars: list[Char], cur: int) -> int | None:
     for i, c in enumerate(chars[cur:]):
         if c.char == " ":
             return cur + i
-    return -1
+    return None
 
 
 def rem_char(chars: list[Char], cur: int) -> None:
