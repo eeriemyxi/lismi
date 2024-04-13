@@ -319,6 +319,8 @@ def typer(stdscr: curses.window, chars: list[Char]) -> bool:  # noqa: C901
                 rem_char(chars, cur - 1)
                 cur -= 1
             p_args = (chars, stdscr, MAX_SPACES, ss)
+            _report_printed = False
+            curses.curs_set(1)
             printer(*p_args)
             continue
         if key == "\x1b":  # esc
