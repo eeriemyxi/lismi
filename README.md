@@ -36,6 +36,9 @@ pip install git+<REPO URL>@main
 1. When the report card is shown, you can use backspace or C-W or C-backspace to go back
    and correct yourself somewhere in the test you just completed. Do note that that the
    time you spent reading the report card is accounted for calculating WPM.
+1. You can use 
+   [this script](https://gist.github.com/eeriemyxi/ec779ba75d1a6a807234d6cf2af480d5) to swap
+   your keyboard layout per test. Similar to the Layoutfluid feature of MonkeyType.
 1. You can do `lismi --help` for more tips. Thank you for using Lismi!
 
 # Command-Line Arguments
