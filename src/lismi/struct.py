@@ -8,7 +8,7 @@ class CharState(enum.Enum):
     DEFAULT = enum.auto()
 
 
-class SupportedLayouts(enum.Enum):
+class SupportedLayout(enum.Enum):
     COLEMAK = tuple(
         "qqwwffppggjjlluuyy;:[{]}aarrssttddhhnneeiioo'\"zzxxccvvbbkkmm,<.>/?"
     )

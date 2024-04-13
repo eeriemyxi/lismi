@@ -16,8 +16,8 @@ def get_index(arr: tuple, item: object) -> int | None:
 
 def convert_char(
     char: str,
-    target_layout: struct.SupportedLayouts,
-    emulate_layout: struct.SupportedLayouts,
+    target_layout: struct.SupportedLayout,
+    emulate_layout: struct.SupportedLayout,
 ) -> str:
     if ei := get_index(target_layout.value, char):
         return emulate_layout.value[ei]

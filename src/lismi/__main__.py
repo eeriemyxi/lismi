@@ -16,7 +16,7 @@ TARGET_LAYOUT = "qwerty"
 EMULATE_LAYOUT = "qwerty"
 ONE_SHOT = False
 
-AVAILABLE_LAYOUTS = ", ".join(map(str.lower, (i.name for i in struct.SupportedLayouts)))
+AVAILABLE_LAYOUTS = ", ".join(map(str.lower, (i.name for i in struct.SupportedLayout)))
 
 parser = argparse.ArgumentParser(
     description="Lismi - A simple typing frontend for terminals."
@@ -92,7 +92,7 @@ parser.add_argument(
 cli_args = parser.parse_args()
 
 for i in (cli_args.target_layout, cli_args.emulate_layout):
-    if i.upper() in struct.SupportedLayouts:
+    if i.upper() in dir(struct.SupportedLayout):
         continue
     raise ValueError(
         f"Unsupported layout {i!r} specified. Supported layouts: {AVAILABLE_LAYOUTS}.",
@@ -107,8 +107,8 @@ WORD_COUNT = cli_args.word_count
 SKIP_WORDS = cli_args.skip_words
 NO_QUICK_END = cli_args.no_quick_end
 ONE_SHOT = cli_args.one_shot
-TARGET_LAYOUT = struct.SupportedLayouts[cli_args.target_layout.upper()]
-EMULATE_LAYOUT = struct.SupportedLayouts[cli_args.emulate_layout.upper()]
+TARGET_LAYOUT = struct.SupportedLayout[cli_args.target_layout.upper()]
+EMULATE_LAYOUT = struct.SupportedLayout[cli_args.emulate_layout.upper()]
 
 
 STATE_COLORS = {
