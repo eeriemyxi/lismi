@@ -20,6 +20,7 @@ SKIP_WORDS = False
 QUICK_END = False
 TARGET_LAYOUT = "qwerty"
 EMULATE_LAYOUT = "qwerty"
+ONE_SHOT = False
 
 parser = argparse.ArgumentParser(
     description="Lismi - A simple typing frontend for terminals."
@@ -37,6 +38,13 @@ parser.add_argument(
     action="store_true",
     default=SKIP_WORDS,
     help="Space skips words.",
+)
+parser.add_argument(
+    "-S",
+    "--one-shot",
+    action="store_true",
+    default=ONE_SHOT,
+    help="Exit after first test.",
 )
 parser.add_argument(
     "-t",
@@ -77,6 +85,7 @@ MAX_SPACES = cli_args.max_spaces if cli_args.max_spaces > 2 else 2
 WORD_COUNT = cli_args.word_count
 SKIP_WORDS = cli_args.skip_words
 QUICK_END = cli_args.quick_end
+ONE_SHOT = cli_args.one_shot
 TARGET_LAYOUT = globals()[cli_args.target_layout.upper()]
 EMULATE_LAYOUT = globals()[cli_args.emulate_layout.upper()]
 
@@ -299,6 +308,8 @@ def typer(stdscr: curses.window, chars: list[Char]) -> bool:  # noqa: C901
             printer(*p_args)
             continue
         if key == "\x1b":  # esc
+            if ONE_SHOT:
+                return False
             return True
         if key == "\x7f":  # backspace
             if not cur > 0:
