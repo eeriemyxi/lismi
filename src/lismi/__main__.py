@@ -40,6 +40,12 @@ parser.add_argument(
     help=f"Typer word file. Defaults (currently) to {str(WORD_FILE)!r}.",
 )
 parser.add_argument(
+    "-p",
+    "--prepend-script-directory",
+    action="store_true",
+    help="Look for the word file in the script directory's dedicated folder.",
+)
+parser.add_argument(
     "-s",
     "--skip-words",
     action="store_true",
@@ -89,6 +95,9 @@ parser.add_argument(
 cli_args = parser.parse_args()
 
 WORD_FILE = cli_args.word_file
+if cli_args.prepend_script_directory:
+    WORD_FILE = SCRIPT_DIR / "words" / WORD_FILE
+
 MAX_SPACES = cli_args.max_spaces if cli_args.max_spaces > 2 else 2
 WORD_COUNT = cli_args.word_count
 SKIP_WORDS = cli_args.skip_words
