@@ -309,10 +309,6 @@ def typer(stdscr: curses.window, chars: list[Char]) -> bool:  # noqa: C901
 
         key = stdscr.getkey()
 
-        if cur == 0 and not _st_reset:
-            _st_reset = True
-            start_time = time.time()
-
         if key == "\x17" or key == "\x08":  # c-w | c-backspace
             if chars[cur - 1].char == " ":
                 rem_char(chars, cur - 1)
@@ -352,6 +348,10 @@ def typer(stdscr: curses.window, chars: list[Char]) -> bool:  # noqa: C901
             cur = np + 1
             printer(*p_args)
             continue
+
+        if cur == 0 and not _st_reset:
+            _st_reset = True
+            start_time = time.time()
 
         key = convert_char(key, TARGET_LAYOUT, EMULATE_LAYOUT)
 
