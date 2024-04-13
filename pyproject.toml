@@ -1,6 +1,6 @@
 [project]
 name = "lismi"
-version = "0.14.0-beta"
+version = "0.14.1-beta"
 description = "A simple typing frontend for terminals."
 authors = [
     { name = "myxi", email = "myxi@envs.net" }
