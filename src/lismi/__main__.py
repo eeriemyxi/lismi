@@ -416,6 +416,3 @@ if __name__ == "__main__":
     _main()
 
 # TODO: add live wpm counter
-# TODO: spread the code over multiple files
-# TODO: add struct for available layouts and use it for showing available
-#       layouts in the help descs of -t and -e
