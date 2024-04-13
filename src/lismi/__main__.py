@@ -322,6 +322,15 @@ def typer(stdscr: curses.window, chars: list[Char]) -> bool:  # noqa: C901
             curses.curs_set(1)
             printer(*p_args)
             continue
+        if key == "\x05":  # c-e
+            cur = 0
+            for c in chars:
+                rem_char(c)
+            _report_printed = False
+            _st_reset = False
+            curses.curs_set(1)
+            printer(*p_args)
+            continue
         if key == "\x1b":  # esc
             if ONE_SHOT:
                 return False
