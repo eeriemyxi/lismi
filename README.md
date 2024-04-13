@@ -29,8 +29,8 @@ pip install git+<REPO URL>@main
 
 # Command-Line Arguments
 ```
-usage: lismi [-h] [-w WORD_COUNT] [-s] [-t TARGET_LAYOUT] [-e EMULATE_LAYOUT]
-             [-m MAX_SPACES] [-q] [-V]
+usage: lismi [-h] [-w WORD_COUNT] [-W WORD_FILE] [-p] [-s] [-S]
+             [-t TARGET_LAYOUT] [-e EMULATE_LAYOUT] [-m MAX_SPACES] [-q] [-V]
 
 Lismi - A simple typing frontend for terminals.
 
@@ -38,7 +38,15 @@ options:
   -h, --help            show this help message and exit
   -w WORD_COUNT, --word-count WORD_COUNT
                         Number of words per test. Default: 20.
+  -W WORD_FILE, --word-file WORD_FILE
+                        Typer word file. Defaults (currently) to '/home/myxi/.as
+                        df/installs/python/3.12.2/lib/python3.12/site-
+                        packages/lismi/words/two-hundred.txt'.
+  -p, --prepend-script-directory
+                        Look for the word file in the script directory's
+                        dedicated folder.
   -s, --skip-words      Space skips words.
+  -S, --one-shot        Exit after first test.
   -t TARGET_LAYOUT, --target-layout TARGET_LAYOUT
                         Target layout. Default: 'qwerty'. Available: qwerty,
                         colemak.
