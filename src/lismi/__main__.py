@@ -91,6 +91,13 @@ parser.add_argument(
 )
 cli_args = parser.parse_args()
 
+for i in (cli_args.target_layout, cli_args.emulate_layout):
+    if i.upper() in struct.SupportedLayouts:
+        continue
+    raise ValueError(
+        f"Unsupported layout {i!r} specified. Supported layouts: {AVAILABLE_LAYOUTS}.",
+    ) from None
+
 WORD_FILE = cli_args.word_file
 if cli_args.prepend_script_directory:
     WORD_FILE = SCRIPT_DIR / "words" / WORD_FILE
