@@ -30,7 +30,7 @@ pip install git+<REPO URL>@main
 1. You can reset a test using C-e key combination.
 1. You can skip a test using the Esc key.
 1. You can do `-p -W file.txt` or `-pW file.txt` to select a text file from the `words/`
-   folder of this project. E.g., you can do `-qW ten-thousand.txt` to select the 10K
+   folder of this project. E.g., you can do `-pW ten-thousand.txt` to select the 10K
    word file from [here](src/lismi/words/ten-thousand.txt). Your current working directory (CWD)
    does not matter.
 1. When the report card is shown, you can use backspace or C-W or C-backspace to go back
