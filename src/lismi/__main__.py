@@ -275,10 +275,9 @@ def next_space_index(chars: list[Char], cur: int) -> int | None:
     return None
 
 
-def rem_char(chars: list[Char], cur: int) -> None:
-    chars[cur].state = CharState.DEFAULT
-    chars[cur].typed = chars[cur].char
-    cur -= 1
+def rem_char(char: Char) -> None:
+    char.state = CharState.DEFAULT
+    char.typed = char.char
 
 
 def typer(stdscr: curses.window, chars: list[Char]) -> bool:  # noqa: C901
@@ -310,13 +309,13 @@ def typer(stdscr: curses.window, chars: list[Char]) -> bool:  # noqa: C901
         key = stdscr.getkey()
 
         if key == "\x17" or key == "\x08":  # c-w | c-backspace
-            if chars[cur - 1].char == " ":
-                rem_char(chars, cur - 1)
+            if chars[cur - 1].char == " " and cur > 0:
+                rem_char(chars[cur-1])
                 cur -= 1
             while chars[cur - 1].char != " ":
                 if cur == 0:
                     break
-                rem_char(chars, cur - 1)
+                rem_char(chars[cur-1])
                 cur -= 1
             p_args = (chars, stdscr, MAX_SPACES, ss)
             _report_printed = False
@@ -330,7 +329,7 @@ def typer(stdscr: curses.window, chars: list[Char]) -> bool:  # noqa: C901
         if key == "\x7f":  # backspace
             if not cur > 0:
                 continue
-            rem_char(chars, cur - 1)
+            rem_char(chars[cur - 1])
             cur -= 1
             _report_printed = False
             curses.curs_set(1)
