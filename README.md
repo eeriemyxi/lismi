@@ -24,6 +24,19 @@ pip install ./lismi
 ```bash
 pip install git+<REPO URL>@main
 ```
+# Tips
+1. You can delete whole words with C-w (CTRL + w) or C-backspace key combination. C-w is
+   not as universal as C-backspace, though.
+1. You can reset a test using C-e key combination.
+1. You can skip a test using the Esc key.
+1. You can do `-p -W file.txt` or `-pW file.txt` to select a text file from the `words/`
+   folder of this project. E.g., you can do `-qW ten-thousand.txt` to select the 10K
+   word file from [here](words/ten-thousand.txt). Your current working directory (CWD)
+   does not matter.
+1. When the report card is shown, you can use backspace or C-W or C-backspace to go back
+   and correct yourself somewhere in the test you just completed. Do note that that the
+   time you spent reading the report card is accounted for calculating WPM.
+1. You can do `lismi --help` for more tips. Thank you for using Lismi!
 
 # Command-Line Arguments
 ```
@@ -57,3 +70,4 @@ options:
                         Default: True.
   -V, --version         Show program version.
 ```
+
