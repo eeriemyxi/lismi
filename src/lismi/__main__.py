@@ -13,6 +13,7 @@ import typing
 COLEMAK = list("qqwwffppggjjlluuyy;:[{]}aarrssttddhhnneeiioo'\"zzxxccvvbbkkmm,<.>/?")
 QWERTY = list("qqwweerrttyyuuiioopp[{]}aassddffgghhjjkkll;:'\"zzxxccvvbbnnmm,<.>/?")
 SCRIPT_DIR = pathlib.Path(__file__).parent
+WORD_FILE = SCRIPT_DIR / "words" / "two-hundred.txt"
 MAX_SPACES = 10
 """Minimum: 2"""
 WORD_COUNT = 20
@@ -31,6 +32,12 @@ parser.add_argument(
     type=int,
     default=WORD_COUNT,
     help=f"Number of words per test. Default: {WORD_COUNT!r}.",
+)
+parser.add_argument(
+    "-W",
+    "--word-file",
+    default=WORD_FILE,
+    help=f"Typer word file. Defaults (currently) to {str(WORD_FILE)!r}.",
 )
 parser.add_argument(
     "-s",
@@ -81,6 +88,7 @@ parser.add_argument(
 )
 cli_args = parser.parse_args()
 
+WORD_FILE = cli_args.word_file
 MAX_SPACES = cli_args.max_spaces if cli_args.max_spaces > 2 else 2
 WORD_COUNT = cli_args.word_count
 SKIP_WORDS = cli_args.skip_words
@@ -124,7 +132,7 @@ def convert_char(char: str, target_layout: list[str], emulate_layout: list[str])
 
 
 def get_words(count: int) -> str:
-    with open(SCRIPT_DIR / "words" / "two-hundred.txt") as file:
+    with open(WORD_FILE) as file:
         return " ".join(random.choices(file.read().split(), k=count))  # noqa:S311
 
 
