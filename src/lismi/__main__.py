@@ -37,7 +37,7 @@ parser.add_argument(
     "-W",
     "--word-file",
     default=WORD_FILE,
-    help=f"Typer word file. Defaults (currently) to {str(WORD_FILE)!r}.",
+    help=f"Word file. Defaults (currently) to {str(WORD_FILE)!r}.",
 )
 parser.add_argument(
     "-p",
