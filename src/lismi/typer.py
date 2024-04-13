@@ -12,8 +12,8 @@ def typer(  # noqa: C901
     no_quick_end: bool,
     one_shot: bool,
     skip_words: bool,
-    target_layout: list[str],
-    emulate_layout: list[str],
+    target_layout: struct.SupportedLayouts,
+    emulate_layout: struct.SupportedLayouts,
 ) -> bool:
     ss, _ = util.lrgst_k_sp_ss(max_spaces, chars)
     ss = len(ss)

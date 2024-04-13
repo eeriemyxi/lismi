@@ -5,8 +5,6 @@ import pathlib
 
 from src.lismi import struct, typer, util
 
-COLEMAK = list("qqwwffppggjjlluuyy;:[{]}aarrssttddhhnneeiioo'\"zzxxccvvbbkkmm,<.>/?")
-QWERTY = list("qqwweerrttyyuuiioopp[{]}aassddffgghhjjkkll;:'\"zzxxccvvbbnnmm,<.>/?")
 SCRIPT_DIR = pathlib.Path(__file__).parent
 WORD_FILE = SCRIPT_DIR / "words" / "two-hundred.txt"
 MAX_SPACES = 10
@@ -17,6 +15,8 @@ NO_QUICK_END = True
 TARGET_LAYOUT = "qwerty"
 EMULATE_LAYOUT = "qwerty"
 ONE_SHOT = False
+
+AVAILABLE_LAYOUTS = ", ".join(map(str.lower, (i.name for i in struct.SupportedLayouts)))
 
 parser = argparse.ArgumentParser(
     description="Lismi - A simple typing frontend for terminals."
@@ -58,13 +58,14 @@ parser.add_argument(
     "-t",
     "--target-layout",
     default=TARGET_LAYOUT,
-    help=f"Target layout. Default: {TARGET_LAYOUT!r}. Available: qwerty, colemak.",
+    help=f"Target layout. Default: {TARGET_LAYOUT!r}. Available: {AVAILABLE_LAYOUTS}.",
 )
 parser.add_argument(
     "-e",
     "--emulate-layout",
     default=EMULATE_LAYOUT,
-    help=f"Emulate layout. Default: {EMULATE_LAYOUT!r}. Available: qwerty, colemak.",
+    help="Emulate layout."
+    f"Default: {EMULATE_LAYOUT!r}. Available: {AVAILABLE_LAYOUTS}.",
 )
 parser.add_argument(
     "-m",
@@ -99,8 +100,8 @@ WORD_COUNT = cli_args.word_count
 SKIP_WORDS = cli_args.skip_words
 NO_QUICK_END = cli_args.no_quick_end
 ONE_SHOT = cli_args.one_shot
-TARGET_LAYOUT = globals()[cli_args.target_layout.upper()]
-EMULATE_LAYOUT = globals()[cli_args.emulate_layout.upper()]
+TARGET_LAYOUT = struct.SupportedLayouts[cli_args.target_layout.upper()]
+EMULATE_LAYOUT = struct.SupportedLayouts[cli_args.emulate_layout.upper()]
 
 
 STATE_COLORS = {

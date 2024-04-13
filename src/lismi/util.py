@@ -7,16 +7,20 @@ import typing
 from src.lismi import struct
 
 
-def get_index(arr: list, item: object) -> int | None:
+def get_index(arr: tuple, item: object) -> int | None:
     try:
         return arr.index(item)
     except ValueError:
         return None
 
 
-def convert_char(char: str, target_layout: list[str], emulate_layout: list[str]) -> str:
-    if ei := get_index(target_layout, char):
-        return emulate_layout[ei]
+def convert_char(
+    char: str,
+    target_layout: struct.SupportedLayouts,
+    emulate_layout: struct.SupportedLayouts,
+) -> str:
+    if ei := get_index(target_layout.value, char):
+        return emulate_layout.value[ei]
     return char
 
 

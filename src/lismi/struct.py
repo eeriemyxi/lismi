@@ -8,6 +8,15 @@ class CharState(enum.Enum):
     DEFAULT = enum.auto()
 
 
+class SupportedLayouts(enum.Enum):
+    COLEMAK = tuple(
+        "qqwwffppggjjlluuyy;:[{]}aarrssttddhhnneeiioo'\"zzxxccvvbbkkmm,<.>/?"
+    )
+    QWERTY = tuple(
+        "qqwweerrttyyuuiioopp[{]}aassddffgghhjjkkll;:'\"zzxxccvvbbnnmm,<.>/?"
+    )
+
+
 @dataclasses.dataclass
 class Char:
     char: str
