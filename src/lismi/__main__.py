@@ -369,6 +369,9 @@ def _main() -> None:
         curses.endwin()
         raise err
 
+    curses.endwin()
+    exit(0)
+
 
 if __name__ == "__main__":
     _main()
