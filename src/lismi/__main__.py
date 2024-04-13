@@ -18,7 +18,7 @@ MAX_SPACES = 10
 """Minimum: 2"""
 WORD_COUNT = 20
 SKIP_WORDS = False
-QUICK_END = False
+NO_QUICK_END = True
 TARGET_LAYOUT = "qwerty"
 EMULATE_LAYOUT = "qwerty"
 ONE_SHOT = False
@@ -80,10 +80,11 @@ parser.add_argument(
 )
 parser.add_argument(
     "-q",
-    "--quick-end",
-    default=QUICK_END,
-    action="store_true",
-    help=f"Quickly end test by ignoring last space. Default: {QUICK_END!r}.",
+    "--no-quick-end",
+    default=NO_QUICK_END,
+    action="store_false",
+    help="Disable quickly ending test by ignoring last space. "
+    f"Default: {NO_QUICK_END!r}.",
 )
 parser.add_argument(
     "-V",
@@ -101,7 +102,7 @@ if cli_args.prepend_script_directory:
 MAX_SPACES = cli_args.max_spaces if cli_args.max_spaces > 2 else 2
 WORD_COUNT = cli_args.word_count
 SKIP_WORDS = cli_args.skip_words
-QUICK_END = cli_args.quick_end
+NO_QUICK_END = cli_args.no_quick_end
 ONE_SHOT = cli_args.one_shot
 TARGET_LAYOUT = globals()[cli_args.target_layout.upper()]
 EMULATE_LAYOUT = globals()[cli_args.emulate_layout.upper()]
@@ -292,7 +293,7 @@ def typer(stdscr: curses.window, chars: list[Char]) -> bool:  # noqa: C901
     printer(*p_args)
 
     while True:
-        if cur >= (len(chars) - QUICK_END) and not _report_printed:
+        if cur >= (len(chars) - NO_QUICK_END) and not _report_printed:
             cc = 0
             ic = 0
             end_time = time.time()
@@ -337,7 +338,7 @@ def typer(stdscr: curses.window, chars: list[Char]) -> bool:  # noqa: C901
             curses.curs_set(1)
             printer(*p_args)
             continue
-        if cur == len(chars) - QUICK_END:
+        if cur == len(chars) - NO_QUICK_END:
             continue
         if key == "\r" or key == "KEY_RESIZE":
             printer(*p_args)
