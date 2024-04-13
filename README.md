@@ -43,7 +43,7 @@ pip install git+<REPO URL>@main
 
 # Command-Line Arguments
 ```
-usage: __main__.py [-h] [-w WORD_COUNT] [-W WORD_FILE] [-p] [-s] [-S]
+usage: lismi [-h] [-w WORD_COUNT] [-W WORD_FILE] [-p] [-s] [-S]
                    [-t TARGET_LAYOUT] [-e EMULATE_LAYOUT] [-m MAX_SPACES] [-q]
                    [-V]
 
