@@ -31,7 +31,7 @@ pip install git+<REPO URL>@main
 1. You can skip a test using the Esc key.
 1. You can do `-p -W file.txt` or `-pW file.txt` to select a text file from the `words/`
    folder of this project. E.g., you can do `-qW ten-thousand.txt` to select the 10K
-   word file from [here](words/ten-thousand.txt). Your current working directory (CWD)
+   word file from [here](src/lismi/words/ten-thousand.txt). Your current working directory (CWD)
    does not matter.
 1. When the report card is shown, you can use backspace or C-W or C-backspace to go back
    and correct yourself somewhere in the test you just completed. Do note that that the
