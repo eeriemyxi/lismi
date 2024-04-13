@@ -4,8 +4,6 @@
     <img src="assets/demo.gif"
 </p>
 
-Note: First run reports WPM as 10 due to a bug that has been fixed with v0.8.1.
-
 A simple typing frontend for your terminal.
 
 # State of the Project
