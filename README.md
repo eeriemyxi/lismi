@@ -62,15 +62,14 @@ options:
   -s, --skip-words      Space skips words.
   -S, --one-shot        Exit after first test.
   -t TARGET_LAYOUT, --target-layout TARGET_LAYOUT
-                        Target layout. Default: 'qwerty'. Available: qwerty,
-                        colemak.
+                        Target layout. Default: 'qwerty'. Available: colemak,
+                        qwerty.
   -e EMULATE_LAYOUT, --emulate-layout EMULATE_LAYOUT
-                        Emulate layout. Default: 'qwerty'. Available: qwerty,
-                        colemak.
+                        Emulate layout.Default: 'qwerty'. Available: colemak,
+                        qwerty.
   -m MAX_SPACES, --max-spaces MAX_SPACES
                         Max spaces per line. Default: 10. Minimum: 2.
   -q, --no-quick-end    Disable quickly ending test by ignoring last space.
-                        Default: True.
   -V, --version         Show program version.
 ```
 
