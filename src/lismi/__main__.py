@@ -79,8 +79,7 @@ parser.add_argument(
     "--no-quick-end",
     default=NO_QUICK_END,
     action="store_false",
-    help="Disable quickly ending test by ignoring last space. "
-    f"Default: {NO_QUICK_END!r}.",
+    help="Disable quickly ending test by ignoring last space."
 )
 parser.add_argument(
     "-V",
