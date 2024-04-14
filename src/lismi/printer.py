@@ -23,7 +23,7 @@ def report_printer(stdscr: curses.window, cc: int, ic: int, minutes: float) -> N
         stdscr.addstr((y // 2 - len(outp) // 2) + i, x // 2 - lrg // 2, outp[i] + "\n")
 
 
-def printer(
+def typer_printer(
     state_colors: dict[struct.CharState, int],
     chars: list[struct.Char],
     stdscr: curses.window,

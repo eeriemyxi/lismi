@@ -1,7 +1,7 @@
 import curses
 import time
 
-from src.lismi import printers, struct, util
+from src.lismi import printer, struct, util
 
 
 def typer(  # noqa: C901
@@ -23,7 +23,7 @@ def typer(  # noqa: C901
     _report_printed = False
 
     p_args = (state_colors, chars, stdscr, max_spaces, ss)
-    printers.printer(*p_args)
+    printer.typer_printer(*p_args)
 
     while True:
         if cur >= (len(chars) - no_quick_end) and not _report_printed:
@@ -36,7 +36,7 @@ def typer(  # noqa: C901
                     cc += 1
                 if c.state == struct.CharState.INCORRECT:
                     ic += 1
-            printers.report_printer(stdscr, cc, ic, minutes)
+            printer.report_printer(stdscr, cc, ic, minutes)
             _report_printed = True
             continue
 
@@ -54,7 +54,7 @@ def typer(  # noqa: C901
             p_args = (state_colors, chars, stdscr, max_spaces, ss)
             _report_printed = False
             curses.curs_set(1)
-            printers.printer(*p_args)
+            printer.typer_printer(*p_args)
             continue
         if key == "\x05":  # c-e
             cur = 0
@@ -63,7 +63,7 @@ def typer(  # noqa: C901
             _report_printed = False
             _st_reset = False
             curses.curs_set(1)
-            printers.printer(*p_args)
+            printer.typer_printer(*p_args)
             continue
         if key == "\x1b":  # esc
             if one_shot:
@@ -76,12 +76,12 @@ def typer(  # noqa: C901
             cur -= 1
             _report_printed = False
             curses.curs_set(1)
-            printers.printer(*p_args)
+            printer.typer_printer(*p_args)
             continue
         if cur == len(chars) - no_quick_end:
             continue
         if key == "\r" or key == "KEY_RESIZE":
-            printers.printer(*p_args)
+            printer.typer_printer(*p_args)
             continue
         if skip_words and key == " " and cur < len(chars) and chars[cur].char != " ":
             np = util.next_space_index(chars, cur)
@@ -90,7 +90,7 @@ def typer(  # noqa: C901
             for c in chars[cur : np + 1]:
                 c.state = struct.CharState.INCORRECT
             cur = np + 1
-            printers.printer(*p_args)
+            printer.typer_printer(*p_args)
             continue
 
         if cur == 0 and not _st_reset:
@@ -110,4 +110,4 @@ def typer(  # noqa: C901
 
         cur += 1
 
-        printers.printer(*p_args)
+        printer.typer_printer(*p_args)
