@@ -33,7 +33,7 @@ pip install git+<REPO URL>@main
    folder of this project. E.g., you can do `-pW ten-thousand.txt` to select the 10K
    word file from [here](src/lismi/words/ten-thousand.txt). Your current working directory (CWD)
    does not matter.
-1. When the report card is shown, you can use backspace or C-W or C-backspace to go back
+1. When the report card is shown, you can use backspace or C-w or C-backspace to go back
    and correct yourself somewhere in the test you just completed. Do note that that the
    time you spent reading the report card is accounted for calculating WPM.
 1. You can use 
