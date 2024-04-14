@@ -10,10 +10,10 @@ class CharState(enum.Enum):
 
 class SupportedLayout(enum.Enum):
     COLEMAK = tuple(
-        "qqwwffppggjjlluuyy;:[{]}aarrssttddhhnneeiioo'\"zzxxccvvbbkkmm,<.>/?"
+        "qQwWfFpPgGjJlLuUyY;:[{]}aArRsStTdDhHnNeEiIoO'\"zZxXcCvVbBkKmM,<.>/?"
     )
     QWERTY = tuple(
-        "qqwweerrttyyuuiioopp[{]}aassddffgghhjjkkll;:'\"zzxxccvvbbnnmm,<.>/?"
+        "qQwWeErRtTyYuUiIoOpP[{]}aAsSdDfFgGhHjJkKlL;:'\"zZxXcCvVbBnNmM,<.>/?"
     )
 
 
