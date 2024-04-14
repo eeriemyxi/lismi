@@ -12,6 +12,7 @@ MAX_SPACES = 10
 WORD_COUNT = 20
 SKIP_WORDS = False
 NO_QUICK_END = True
+NO_BACKSPACE = False
 TARGET_LAYOUT = "qwerty"
 EMULATE_LAYOUT = "qwerty"
 ONE_SHOT = False
@@ -141,6 +142,7 @@ def main() -> None:
             NO_QUICK_END,
             ONE_SHOT,
             SKIP_WORDS,
+            NO_BACKSPACE,
             TARGET_LAYOUT,
             EMULATE_LAYOUT,
         )

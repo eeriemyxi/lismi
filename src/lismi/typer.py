@@ -12,6 +12,7 @@ def typer(  # noqa: C901
     no_quick_end: bool,
     one_shot: bool,
     skip_words: bool,
+    no_backspace: bool,
     target_layout: struct.SupportedLayout,
     emulate_layout: struct.SupportedLayout,
 ) -> bool:
@@ -43,6 +44,8 @@ def typer(  # noqa: C901
         key = stdscr.getkey()
 
         if key == "\x17" or key == "\x08":  # c-w | c-backspace
+            if no_backspace:
+                continue
             if chars[cur - 1].char == " " and cur > 0:
                 util.rem_char(chars[cur - 1])
                 cur -= 1
@@ -70,6 +73,8 @@ def typer(  # noqa: C901
                 return False
             return True
         if key == "\x7f":  # backspace
+            if no_backspace:
+                continue
             if not cur > 0:
                 continue
             util.rem_char(chars[cur - 1])
