@@ -43,9 +43,9 @@ pip install git+<REPO URL>@main
 
 # Command-Line Arguments
 ```
-usage: lismi [-h] [-w WORD_COUNT] [-W WORD_FILE] [-p] [-s] [-S]
-                   [-t TARGET_LAYOUT] [-e EMULATE_LAYOUT] [-m MAX_SPACES] [-q]
-                   [-V]
+usage: lismi [-h] [-w WORD_COUNT] [-W WORD_FILE] [-Q QUOTE] [-p] [-s] [-S]
+             [-t TARGET_LAYOUT] [-e EMULATE_LAYOUT] [-m MAX_SPACES] [-q] [-b]
+             [-V]
 
 Lismi - A simple typing frontend for terminals.
 
@@ -54,8 +54,11 @@ options:
   -w WORD_COUNT, --word-count WORD_COUNT
                         Number of words per test. Default: 20.
   -W WORD_FILE, --word-file WORD_FILE
-                        Word file. Defaults (currently) to '/home/myxi/Documents
-                        /coding/python/lismi/src/lismi/words/two-hundred.txt'.
+                        Word file. Defaults (currently) to '/home/myxi/.asdf/ins
+                        talls/python/3.12.2/lib/python3.12/site-
+                        packages/lismi/words/two-hundred.txt'.
+  -Q QUOTE, --quote QUOTE
+                        Quote to use. Disables word file.
   -p, --prepend-script-directory
                         Look for the word file in the script directory's
                         dedicated folder.
@@ -70,6 +73,7 @@ options:
   -m MAX_SPACES, --max-spaces MAX_SPACES
                         Max spaces per line. Default: 10. Minimum: 2.
   -q, --no-quick-end    Disable quickly ending test by ignoring last space.
+  -b, --no-backspace    Disable deleting words.
   -V, --version         Show program version.
 ```
 
