@@ -1,7 +1,7 @@
 import curses
 import time
 
-from src.lismi import printer, struct, util
+from lismi import printer, struct, util
 
 
 def typer(  # noqa: C901

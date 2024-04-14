@@ -4,7 +4,7 @@ import pathlib
 import random
 import typing
 
-from src.lismi import struct
+from lismi import struct
 
 
 def get_index(arr: tuple, item: object) -> int | None:

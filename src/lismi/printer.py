@@ -1,7 +1,7 @@
 import curses
 import math
 
-from src.lismi import struct, util
+from lismi import struct, util
 
 
 def report_printer(stdscr: curses.window, cc: int, ic: int, minutes: float) -> None:

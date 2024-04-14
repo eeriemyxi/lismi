@@ -3,7 +3,7 @@ import curses
 import importlib.metadata
 import pathlib
 
-from src.lismi import struct, typer, util
+from lismi import struct, typer, util
 
 SCRIPT_DIR = pathlib.Path(__file__).parent
 WORD_FILE = SCRIPT_DIR / "words" / "two-hundred.txt"
