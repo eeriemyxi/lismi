@@ -7,6 +7,7 @@ from src.lismi import struct, typer, util
 
 SCRIPT_DIR = pathlib.Path(__file__).parent
 WORD_FILE = SCRIPT_DIR / "words" / "two-hundred.txt"
+QUOTE = ""
 MAX_SPACES = 10
 """Minimum: 2"""
 WORD_COUNT = 20
@@ -34,6 +35,12 @@ parser.add_argument(
     "--word-file",
     default=WORD_FILE,
     help=f"Word file. Defaults (currently) to {str(WORD_FILE)!r}.",
+)
+parser.add_argument(
+    "-Q",
+    "--quote",
+    default=QUOTE,
+    help="Quote to use. Disables word file.",
 )
 parser.add_argument(
     "-p",
@@ -80,7 +87,14 @@ parser.add_argument(
     "--no-quick-end",
     default=NO_QUICK_END,
     action="store_false",
-    help="Disable quickly ending test by ignoring last space."
+    help="Disable quickly ending test by ignoring last space.",
+)
+parser.add_argument(
+    "-b",
+    "--no-backspace",
+    default=NO_BACKSPACE,
+    action="store_true",
+    help="Disable deleting words.",
 )
 parser.add_argument(
     "-V",
@@ -102,10 +116,12 @@ WORD_FILE = cli_args.word_file
 if cli_args.prepend_script_directory:
     WORD_FILE = SCRIPT_DIR / "words" / WORD_FILE
 
+QUOTE = cli_args.quote
 MAX_SPACES = cli_args.max_spaces if cli_args.max_spaces > 2 else 2
 WORD_COUNT = cli_args.word_count
 SKIP_WORDS = cli_args.skip_words
 NO_QUICK_END = cli_args.no_quick_end
+NO_BACKSPACE = cli_args.no_backspace
 ONE_SHOT = cli_args.one_shot
 TARGET_LAYOUT = struct.SupportedLayout[cli_args.target_layout.upper()]
 EMULATE_LAYOUT = struct.SupportedLayout[cli_args.emulate_layout.upper()]
@@ -132,7 +148,10 @@ def main() -> None:
 
     start_again = True
     while start_again:
-        chars = util.get_char_arr(WORD_FILE, WORD_COUNT)
+        if QUOTE:
+            chars = util.str_to_chars(QUOTE)
+        else:
+            chars = util.get_char_arr(util.get_words(WORD_FILE, WORD_COUNT))
         curses.curs_set(1)
         start_again = typer.typer(
             stdscr,
@@ -166,3 +185,7 @@ if __name__ == "__main__":
     _main()
 
 # TODO: add live wpm counter
+# TODO: add next word highlighter
+# TODO: add timer
+# TODO: add option to share incorrect chars and correct chars,
+#       start time, and end time

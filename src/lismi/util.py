@@ -24,9 +24,21 @@ def convert_char(
     return char
 
 
+def get_char_arr(string: str) -> list[struct.Char]:
+    arr = [struct.Char(c, typed=c, state=struct.CharState.DEFAULT) for c in string]
+    if arr[-1].char != " ":
+        arr.append(struct.Char(" ", " ", struct.CharState.DEFAULT))
+    return arr
+
+
 def get_words(word_file: pathlib.Path, count: int) -> str:
     with open(word_file) as file:
         return " ".join(random.choices(file.read().split(), k=count))  # noqa:S311
+
+
+def str_to_chars(string: str) -> list[struct.Char]:
+    string = string.replace("\n", "")
+    return get_char_arr(string)
 
 
 def next_space_index(chars: list[struct.Char], cur: int) -> int | None:
@@ -39,13 +51,6 @@ def next_space_index(chars: list[struct.Char], cur: int) -> int | None:
 def rem_char(char: struct.Char) -> None:
     char.state = struct.CharState.DEFAULT
     char.typed = char.char
-
-
-def get_char_arr(word_file: pathlib.Path, count: int) -> list[struct.Char]:
-    return [
-        struct.Char(c, typed=c, state=struct.CharState.DEFAULT)
-        for c in get_words(word_file, count)
-    ] + [struct.Char(" ", " ", struct.CharState.DEFAULT)]
 
 
 def lrgst_k_sp_ss(k: int, arr: list[struct.Char]) -> tuple[str, int]:
