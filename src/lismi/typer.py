@@ -13,6 +13,7 @@ def typer(  # noqa: C901
     one_shot: bool,
     skip_words: bool,
     no_backspace: bool,
+    no_esc: bool,
     target_layout: struct.SupportedLayout,
     emulate_layout: struct.SupportedLayout,
 ) -> bool:
@@ -69,6 +70,8 @@ def typer(  # noqa: C901
             printer.typer_printer(*p_args)
             continue
         if key == "\x1b":  # esc
+            if no_esc and not _report_printed:
+                continue
             if one_shot:
                 return False
             return True

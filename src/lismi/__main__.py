@@ -14,6 +14,7 @@ WORD_COUNT = 20
 SKIP_WORDS = False
 NO_QUICK_END = True
 NO_BACKSPACE = False
+NO_ESC = False
 TARGET_LAYOUT = "qwerty"
 EMULATE_LAYOUT = "qwerty"
 ONE_SHOT = False
@@ -97,6 +98,13 @@ parser.add_argument(
     help="Disable deleting words.",
 )
 parser.add_argument(
+    "-E",
+    "--no-esc",
+    default=NO_ESC,
+    action="store_true",
+    help="Make esc key only work on report window.",
+)
+parser.add_argument(
     "-V",
     "--version",
     action="version",
@@ -122,6 +130,7 @@ WORD_COUNT = cli_args.word_count
 SKIP_WORDS = cli_args.skip_words
 NO_QUICK_END = cli_args.no_quick_end
 NO_BACKSPACE = cli_args.no_backspace
+NO_ESC = cli_args.no_esc
 ONE_SHOT = cli_args.one_shot
 TARGET_LAYOUT = struct.SupportedLayout[cli_args.target_layout.upper()]
 EMULATE_LAYOUT = struct.SupportedLayout[cli_args.emulate_layout.upper()]
@@ -162,6 +171,7 @@ def main() -> None:
             ONE_SHOT,
             SKIP_WORDS,
             NO_BACKSPACE,
+            NO_ESC,
             TARGET_LAYOUT,
             EMULATE_LAYOUT,
         )
