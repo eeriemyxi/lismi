@@ -44,8 +44,8 @@ pip install git+<REPO URL>@main
 # Command-Line Arguments
 ```
 usage: lismi [-h] [-w WORD_COUNT] [-W WORD_FILE] [-Q QUOTE] [-p] [-s] [-S]
-             [-t TARGET_LAYOUT] [-e EMULATE_LAYOUT] [-m MAX_SPACES] [-q] [-b]
-             [-V]
+                   [-t TARGET_LAYOUT] [-e EMULATE_LAYOUT] [-m MAX_SPACES] [-q]
+                   [-b] [-E] [-V]
 
 Lismi - A simple typing frontend for terminals.
 
@@ -74,6 +74,7 @@ options:
                         Max spaces per line. Default: 10. Minimum: 2.
   -q, --no-quick-end    Disable quickly ending test by ignoring last space.
   -b, --no-backspace    Disable deleting words.
+  -E, --no-esc          Make esc key only work on report window.
   -V, --version         Show program version.
 ```
 
