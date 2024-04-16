@@ -55,7 +55,6 @@ def typer(  # noqa: C901
                     break
                 util.rem_char(chars[cur - 1])
                 cur -= 1
-            p_args = (state_colors, chars, stdscr, max_spaces, ss)
             _report_printed = False
             curses.curs_set(1)
             printer.typer_printer(*p_args)
