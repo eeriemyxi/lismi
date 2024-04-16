@@ -12,7 +12,7 @@ MAX_SPACES = 10
 """Minimum: 2"""
 WORD_COUNT = 20
 SKIP_WORDS = False
-NO_QUICK_END = True
+NO_QUICK_END = False
 NO_BACKSPACE = False
 NO_ESC = False
 TARGET_LAYOUT = "qwerty"
@@ -87,7 +87,7 @@ parser.add_argument(
     "-q",
     "--no-quick-end",
     default=NO_QUICK_END,
-    action="store_false",
+    action="store_true",
     help="Disable quickly ending test by ignoring last space.",
 )
 parser.add_argument(
