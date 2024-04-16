@@ -38,7 +38,7 @@ def typer(  # noqa: C901
                     cc += 1
                 if c.state == struct.CharState.INCORRECT:
                     ic += 1
-            printer.report_printer(stdscr, cc, ic, minutes)
+            printer.report_printer(stdscr, cc, ic, minutes, emulate_layout)
             _report_printed = True
             continue
 

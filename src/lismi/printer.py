@@ -4,7 +4,13 @@ import math
 from lismi import struct, util
 
 
-def report_printer(stdscr: curses.window, cc: int, ic: int, minutes: float) -> None:
+def report_printer(
+    stdscr: curses.window,
+    cc: int,
+    ic: int,
+    minutes: float,
+    layout: struct.SupportedLayout,
+) -> None:
     stdscr.clear()
     curses.curs_set(0)
     y, x = stdscr.getmaxyx()
@@ -18,6 +24,7 @@ def report_printer(stdscr: curses.window, cc: int, ic: int, minutes: float) -> N
     outp.append(f"Gross WPM: {gwpm if gwpm > 0 else 0}")
     outp.append(f"Net WPM: {nwpm if nwpm > 0 else 0}")
     outp.append(f"Accuracy: {accuracy if accuracy > 0 else 0}%")
+    outp.append(f"Keyboard Layout: {layout.name}")
     lrg = max(map(len, outp))
     for i in range(len(outp)):
         stdscr.addstr((y // 2 - len(outp) // 2) + i, x // 2 - lrg // 2, outp[i] + "\n")
