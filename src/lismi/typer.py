@@ -27,8 +27,16 @@ def typer(  # noqa: C901
     p_args = (state_colors, chars, stdscr, max_spaces, ss)
     printer.typer_printer(*p_args)
 
+    if not no_quick_end:
+        if chars[-1].char != " ":
+            err = ValueError("last char is not a space")
+            err.add_note("Please report it to the maintainers.")
+            curses.endwin()
+            raise err
+        del chars[-1]
+
     while True:
-        if cur >= (len(chars) - no_quick_end) and not _report_printed:
+        if cur >= len(chars) and not _report_printed:
             cc = 0
             ic = 0
             end_time = time.time()
@@ -85,7 +93,7 @@ def typer(  # noqa: C901
             curses.curs_set(1)
             printer.typer_printer(*p_args)
             continue
-        if cur == len(chars) - no_quick_end:
+        if cur == len(chars):
             continue
         if key == "\r" or key == "KEY_RESIZE":
             printer.typer_printer(*p_args)
