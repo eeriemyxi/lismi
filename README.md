@@ -15,6 +15,13 @@ This is in beta stage. The experience is not guaranteed to be stable.
 - text alignment and text wrapping
 
 # Installation
+> [!WARNING]
+> Windows users need to install `windows-curses` module:
+> `pip install windows-curses`
+
+> [!WARNING]
+> It may not work with Python 3.12 on Windows.
+
 ### First Method
 ```bash
 git clone --depth 1 --branch main <REPO URL> lismi
