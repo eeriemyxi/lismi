@@ -15,12 +15,11 @@ This is in beta stage. The experience is not guaranteed to be stable.
 - text alignment and text wrapping
 
 # Installation
-> [!WARNING]
-> Windows users need to install `windows-curses` module:
-> `pip install windows-curses`
-
-> [!WARNING]
-> It may not work with Python 3.12 on Windows.
+### Warning
+- Windows users need to install `windows-curses` module.
+  - `pip install windows-curses`
+- It may not work with Python 3.12 on Windows. Use 3.11. Please note that this warning can
+  be outdated.
 
 ### First Method
 ```bash
