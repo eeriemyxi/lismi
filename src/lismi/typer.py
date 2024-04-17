@@ -1,7 +1,7 @@
 import curses
 import time
 
-from lismi import printer, struct, util
+from lismi import constants, printer, struct, util
 
 
 def typer(  # noqa: C901
@@ -52,7 +52,8 @@ def typer(  # noqa: C901
 
         key = stdscr.getkey()
 
-        if key == "\x17" or key == "\x08":  # c-w | c-backspace
+        # c-w | c-backspace
+        if key in (constants.KEY_CTRL_W, constants.KEY_CTRL_BACKSPACE):
             if no_backspace:
                 continue
             if chars[cur - 1].char == " " and cur > 0:
@@ -67,7 +68,7 @@ def typer(  # noqa: C901
             curses.curs_set(1)
             printer.typer_printer(*p_args)
             continue
-        if key == "\x05":  # c-e
+        if key == constants.KEY_CTRL_E:  # c-e
             cur = 0
             for c in chars:
                 util.rem_char(c)
@@ -76,13 +77,13 @@ def typer(  # noqa: C901
             curses.curs_set(1)
             printer.typer_printer(*p_args)
             continue
-        if key == "\x1b":  # esc
+        if key == constants.KEY_ESC:  # esc
             if no_esc and not _report_printed:
                 continue
             if one_shot:
                 return False
             return True
-        if key == "\x7f":  # backspace
+        if key == constants.KEY_BACKSPACE:  # backspace
             if no_backspace:
                 continue
             if not cur > 0:
