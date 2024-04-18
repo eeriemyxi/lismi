@@ -16,9 +16,10 @@ This is in beta stage. The experience is not guaranteed to be stable.
 
 # Installation
 ### Warning
-- Windows users need to install `windows-curses` module.
+- Windows users need to install `windows-curses` module. It should get installed
+  automatically, but if it does not, please do this:
   - `pip install windows-curses`
-- It may not work with Python 3.12 on Windows. Use 3.11. Please note that this warning can
+- It may not work with Python 3.12 on Windows. Use 3.11. Please note that this can
   be outdated.
 
 ### First Method
